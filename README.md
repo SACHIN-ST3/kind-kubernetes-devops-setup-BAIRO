@@ -32,31 +32,32 @@ kind-setup/
 
 ### **📄 `install-kubectl.sh`**
 
-\#\!/bin/bash
+```
+#!/bin/bash
 
-\# Exit script immediately if any command fails  
-set \-e
+# Exit script immediately if any command fails  
+set -e
 
 echo "🔹 Downloading latest kubectl binary..."
 
 \# Download the latest stable kubectl version  
-curl \-LO "https://storage.googleapis.com/kubernetes-release/release/$(curl \-s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
 
 echo "🔹 Making kubectl executable..."
 
 \# Give execute permission  
-chmod \+x kubectl
+chmod +x kubectl
 
 echo "🔹 Moving kubectl to /usr/local/bin..."
 
-\# Move kubectl to system PATH  
+# Move kubectl to system PATH  
 sudo mv kubectl /usr/local/bin/
 
-echo "✅ kubectl installed successfully\!"
+echo "✅ kubectl installed successfully!"
 
 \# Verify installation  
 kubectl version \--client
-
+```
 ---
 
 ### **🧠 Explanation (Line by Line)**
@@ -77,27 +78,27 @@ kubectl version \--client
 ---
 
 ### **▶️ Run Script**
-
+```
 chmod \+x install-kubectl.sh  
 ./install-kubectl.sh
-
+```
 ---
 
 ## **🧩 Script 2: Install KIND**
 
 ### **📄 `install-kind.sh`**
+```
+#!/bin/bash
 
-\#\!/bin/bash
+# Exit script if any command fails  
+set -e
 
-\# Exit script if any command fails  
-set \-e
+KIND_VERSION="v0.22.0"
 
-KIND\_VERSION="v0.22.0"
+echo "🔹 Downloading KIND ${KIND_VERSION}..."
 
-echo "🔹 Downloading KIND ${KIND\_VERSION}..."
-
-\# Download KIND binary  
-curl \-Lo kind "https://kind.sigs.k8s.io/dl/${KIND\_VERSION}/kind-linux-amd64"
+# Download KIND binary  
+curl -Lo kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64"
 
 echo "🔹 Making KIND executable..."
 
@@ -110,10 +111,12 @@ echo "🔹 Moving KIND to /usr/local/bin..."
 sudo mv kind /usr/local/bin/
 
 echo "✅ KIND installed successfully\!"
+```
 
-\# Verify installation  
+# Verify installation  
+```
 kind version
-
+```
 ---
 
 ### **🧠 Explanation (Line by Line)**
@@ -139,18 +142,18 @@ chmod \+x install-kind.sh
 ---
 
 ## **🔎 Verify Installation**
-
-kubectl version \--client  
+```
+kubectl version --client  
 kind version  
 docker ps
-
+```
 ---
 
 ## **🏁 Create a KIND Cluster (Single Node)**
-
+```
 kind create cluster  
 kubectl get nodes
-
+```
 ---
 
 # **🔹 Create a Multi-Node KIND Cluster (Control Plane \+ Workers)**
@@ -171,15 +174,16 @@ Create a file named:
 kind-multinode.yaml
 
 ### **📌 `kind-multinode.yaml`**
-
+```
 kind: Cluster  
 apiVersion: kind.x-k8s.io/v1alpha4
 
 nodes:  
-\- role: control-plane  
-\- role: worker  
-\- role: worker
+- role: control-plane  
+- role: worker  
+- role: worker
 
+```
 ---
 
 ### **🧠 Explanation (Line by Line)**
@@ -199,11 +203,11 @@ nodes:
 ---
 
 ## **🚀 Step 2: Create Multi-Node KIND Cluster**
-
-kind create cluster \\  
-  \--name multinode-cluster \\  
-  \--config kind-multinode.yaml
-
+```
+kind create cluster \ 
+  --name multinode-cluster \ 
+  --config kind-multinode.yaml
+```
 ---
 
 ### **🧠 What Happens Internally?**
@@ -215,9 +219,9 @@ kind create cluster \\
 ---
 
 ## **🔍 Step 3: Verify Nodes**
-
+```
 kubectl get nodes
-
+```
 Expected output:
 
 NAME                             STATUS   ROLES           AGE   VERSION  
@@ -228,38 +232,40 @@ multinode-cluster-worker2        Ready    \<none\>          1m
 ---
 
 ## **🔍 Step 4: Verify Cluster Info**
-
+```
 kubectl cluster-info
-
+```
 ---
 
 ## **🧪 Step 5: Test Pod Scheduling on Workers**
 
 Create a test deployment:
-
-kubectl create deployment nginx \--image=nginx
+```
+kubectl create deployment nginx --image=nginx
+```
 
 Scale the deployment:
-
-kubectl scale deployment nginx \--replicas=3
-
+```
+kubectl scale deployment nginx --replicas=3
+```
 Check pod placement:
-
-kubectl get pods \-o wide
-
+```
+kubectl get pods -o wide
+```
 ➡️ Pods will be distributed across worker nodes
 
 ---
 
 ## **🧹 Step 6: Delete Multi-Node Cluster**
-
-kind delete cluster \--name multinode-cluster
-
+```
+kind delete cluster --name multinode-cluster
+```
 ---
 
 ## **🔥 Bonus: List All KIND Clusters**
-
+```
 kind get clusters
 
+```
 ---
 
