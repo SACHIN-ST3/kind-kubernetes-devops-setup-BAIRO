@@ -2,35 +2,35 @@
 
 ---
 
-\# 🚀 Install kubectl & KIND using Shell Scripts (Linux)
+# 🚀 Install kubectl & KIND using Shell Scripts (Linux)
 
-This repository provides a \*\*DevOps-style, automated setup\*\* to install:
+This repository provides a DevOps-style, automated setup * to install:
 
-\- \*\*kubectl\*\* (Kubernetes CLI)  
-\- \*\*KIND\*\* (Kubernetes IN Docker)
+- *kubectl ** (Kubernetes CLI)  
+- *KIND * * (Kubernetes IN Docker)
 
-All installations are done using \*\*shell scripts (\`.sh\`)\*\* to ensure:  
-\- Automation  
-\- Repeatability  
-\- Industry best practices
+All installations are done using **shell scripts (`.sh`)* * to ensure:  
+- Automation  
+- Repeatability  
+- Industry best practices
 
-\---
+---
 
-\#\# 📁 Project Structure (Recommended)
+📁 Project Structure (Recommended)
 
-\`\`\`text  
-kind-setup/  
+text  
+kind-setup  
 │  
 ├── install-kubectl.sh  
 ├── install-kind.sh  
 ├── kind-multinode.yaml  
-└── README.md
+
 
 ---
 
 ## **🧩 Script 1: Install kubectl**
 
-### **📄 `install-kubectl.sh`**
+### **📄 ```install-kubectl.sh```**
 
 ```
 #!/bin/bash
@@ -40,12 +40,12 @@ set -e
 
 echo "🔹 Downloading latest kubectl binary..."
 
-\# Download the latest stable kubectl version  
+# Download the latest stable kubectl version  
 curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
 
 echo "🔹 Making kubectl executable..."
 
-\# Give execute permission  
+# Give execute permission  
 chmod +x kubectl
 
 echo "🔹 Moving kubectl to /usr/local/bin..."
@@ -55,8 +55,8 @@ sudo mv kubectl /usr/local/bin/
 
 echo "✅ kubectl installed successfully!"
 
-\# Verify installation  
-kubectl version \--client
+# Verify installation  
+kubectl version --client
 ```
 ---
 
@@ -79,7 +79,7 @@ kubectl version \--client
 
 ### **▶️ Run Script**
 ```
-chmod \+x install-kubectl.sh  
+chmod +x install-kubectl.sh  
 ./install-kubectl.sh
 ```
 ---
@@ -102,15 +102,15 @@ curl -Lo kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64"
 
 echo "🔹 Making KIND executable..."
 
-\# Make KIND executable  
-chmod \+x kind
+# Make KIND executable  
+chmod +x kind
 
 echo "🔹 Moving KIND to /usr/local/bin..."
 
-\# Move KIND binary to PATH  
+# Move KIND binary to PATH  
 sudo mv kind /usr/local/bin/
 
-echo "✅ KIND installed successfully\!"
+echo "✅ KIND installed successfully!"
 ```
 
 # Verify installation  
@@ -136,7 +136,7 @@ kind version
 
 ### **▶️ Run Script**
 
-chmod \+x install-kind.sh  
+chmod +x install-kind.sh  
 ./install-kind.sh
 
 ---
@@ -213,7 +213,7 @@ kind create cluster \
 ### **🧠 What Happens Internally?**
 
 * KIND creates **Docker containers** as nodes  
-* One Docker container \= one Kubernetes node  
+* One Docker container = one Kubernetes node  
 * Networking is handled internally by Docker
 
 ---
@@ -226,8 +226,8 @@ Expected output:
 
 NAME                             STATUS   ROLES           AGE   VERSION  
 multinode-cluster-control-plane  Ready    control-plane   2m    v1.xx.x  
-multinode-cluster-worker         Ready    \<none\>          1m  
-multinode-cluster-worker2        Ready    \<none\>          1m
+multinode-cluster-worker         Ready    <none>          1m  
+multinode-cluster-worker2        Ready    <none>          1m
 
 ---
 
